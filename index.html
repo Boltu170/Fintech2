@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Transformation in Finance - Interactive Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+        min-height: 100vh;
+        padding: 20px;
+        padding-bottom: 40px;
+        color: white;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .slide-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 20px;
+    }
+
+    .section {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        font-weight: 600;
+        font-size: 0.85em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .section-icon {
+        margin-right: 10px;
+        font-size: 1.2em;
+    }
+
+    .concept { background: rgba(30, 58, 138, 0.4); }
+    .example { background: rgba(59, 130, 246, 0.35); }
+    .question { background: rgba(96, 165, 250, 0.35); }
+    .plain { background: rgba(37, 99, 235, 0.35); }
+
+    .section-content {
+        font-size: 1.05em;
+        line-height: 1.6;
+    }
+
+    .question-options {
+        margin-top: 15px;
+    }
+
+    .option {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 12px 15px;
+        margin: 8px 0;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+    }
+
+    .option:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateX(5px);
+    }
+
+    .option.selected {
+        border-color: white;
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+    .option.correct {
+        background: rgba(72, 187, 120, 0.5);
+        border-color: #48bb78;
+    }
+
+    .option.incorrect {
+        background: rgba(245, 101, 101, 0.5);
+        border-color: #f56565;
+    }
+
+    .input-answer {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        font-size: 1em;
+        margin-top: 10px;
+    }
+
+    .input-answer::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .input-answer:focus {
+        outline: none;
+        border-color: white;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .show-answer-btn {
+        background: white;
+        color: #1e40af;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 15px;
+        font-size: 1em;
+        transition: all 0.3s;
+    }
+
+    .show-answer-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .answer-explanation {
+        background: rgba(255, 255, 255, 0.25);
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 15px;
+        display: none;
+        border-left: 4px solid white;
+    }
+
+    .answer-explanation.show {
+        display: block;
+        animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        gap: 15px;
+        position: sticky;
+        bottom: 20px;
+        z-index: 100;
+    }
+
+    .nav-btn {
+        background: rgba(255, 255, 255, 0.95);
+        color: #1e40af;
+        border: 2px solid white;
+        padding: 15px 30px;
+        border-radius: 25px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        flex: 1;
+        font-size: 1.1em;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-btn:hover:not(:disabled) {
+        background: white;
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .nav-btn:active:not(:disabled) {
+        transform: scale(0.98);
+    }
+
+    .slide-indicator {
+        text-align: center;
+        margin: 20px 0;
+        font-weight: 700;
+        font-size: 1.2em;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 12px 20px;
+        border-radius: 20px;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .tf-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .tf-btn {
+        flex: 1;
+        padding: 12px;
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .tf-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .tf-btn.selected {
+        border-color: white;
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+    .abbreviation-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .abbreviation-list li {
+        padding: 8px 0;
+        font-size: 1.05em;
+    }
+
+    .abbreviation-list strong {
+        display: inline-block;
+        min-width: 80px;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Digital Transformation in Finance</h1>
+        </div>
+
+```
+    <div class="slide-indicator" id="slideIndicator">Slide 1 of 21</div>
+
+    <div id="slideContainer"></div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+
+    const slides = [
+        // Slide 1: Abbreviations
+        {
+            title: "Key Abbreviations to Learn",
+            concept: "Understanding the language of FinTech and digital finance is essential. These abbreviations are used throughout the financial technology industry.",
+            example: "When reading about digital finance, you'll see 'API' used to describe how banking apps connect to your account, or 'BNPL' services like Klarna and Afterpay.",
+            question: {
+                type: "fill",
+                text: "API stands for Application _______ Interface",
+                answer: "Programming",
+                explanation: "API stands for Application Programming Interface. It's the software that allows different applications to communicate with each other, like how your banking app connects to your bank's system."
+            },
+            plain: "Abbreviations list: API = Application Programming Interface (software letting apps communicate). BNPL = Buy Now Pay Later (services like Klarna). DeFi = Decentralised Finance (finance without traditional banks). DLT = Distributed Ledger Technology (database shared across networks). P2P = Peer-to-peer (direct transactions between individuals)."
+        },
+
+        // Slide 2: Digital Transformation Definition + Transformation in Finance
+        {
+            title: "What is Digital Transformation in Finance?",
+            concept: "Digital transformation is the process of integrating digital technologies into financial operations, changing how organizations create value, manage data, and structure their business processes. It shifts finance from paper-based manual work to digital, automated, data-driven systems.",
+            example: "Traditional banks required you to visit branches for transactions. Now, apps like Monzo and Revolut let you open accounts, transfer money, and manage finances entirely from your phone.",
+            question: {
+                type: "mcq",
+                text: "Digital transformation in finance represents a shift from:",
+                options: [
+                    "Digital to manual processes",
+                    "Institution-centred to system-centred models",
+                    "Open to closed systems",
+                    "Automated to human-driven operations"
+                ],
+                answer: 1,
+                explanation: "Digital transformation shifts finance from institution-centred to system-centred models. It also moves from paper-based to digital, from manual to automated, and from closed to open API-enabled ecosystems."
+            },
+            plain: "Digital transformation means finance moved from paper-based manual work to digital automated systems with open API-enabled ecosystems. Instead of banks controlling everything, we now have interconnected systems where multiple players can participate."
+        },
+
+        // Slide 3: Transformation in Financial Operations
+        {
+            title: "Transformation in Financial Operations",
+            concept: "Automation reduces routine tasks and increases insight-driven work. Real-time data flows replace monthly or quarterly cycles. AI alters how credit, fraud, and compliance decisions are made.",
+            example: "Previously, accountants spent days closing monthly books. Now, systems like Xero automatically categorize transactions in real-time, allowing accountants to focus on strategic analysis instead of data entry.",
+            question: {
+                type: "tf",
+                text: "Real-time data flows have replaced monthly or quarterly reporting cycles in modern finance.",
+                answer: true,
+                explanation: "True. Digital transformation enables real-time data processing and reporting, replacing the traditional monthly or quarterly cycles. This allows for immediate insights and faster decision-making."
+            },
+            plain: "Financial operations now run automatically instead of manually. Instead of waiting weeks or months for reports, data is available instantly. Computers and AI make decisions that humans used to make (like approving loans or detecting fraud)."
+        },
+
+        // Slide 4: Transformation in Financial Participation
+        {
+            title: "Transformation in Financial Participation",
+            concept: "Digital transformation democratizes financial participation. Individuals can raise capital directly through crowdfunding. Non-banks offer payments and lending services. SMEs access alternative funding channels. Developers and platforms become financial actors through open banking.",
+            example: "A small business can now raise £50,000 through Crowdcube from hundreds of individual investors, bypassing traditional bank loans entirely. Developers can build financial apps using open banking APIs.",
+            question: {
+                type: "mcq",
+                text: "Which of these is NOT a result of transformation in financial participation?",
+                options: [
+                    "Individuals can raise capital through crowdfunding",
+                    "Only banks can offer payment services",
+                    "SMEs can access alternative funding channels",
+                    "Developers become financial actors through open banking"
+                ],
+                answer: 1,
+                explanation: "The statement 'Only banks can offer payment services' is incorrect. Digital transformation has enabled non-banks (like PayPal, Revolut, and Apple Pay) to offer payment services, breaking the traditional banking monopoly."
+            },
+            plain: "More people and businesses can now participate in finance. Regular people can raise money online (crowdfunding). Tech companies (not just banks) can offer financial services. Small businesses have more ways to get funding. App developers can create financial tools using open banking."
+        },
+
+        // Slide 5: Digital Payments Example
+        {
+            title: "Example: Digital Payments",
+            concept: "Digital payment systems like Apple Pay, Monzo, and M-Pesa enable instant transactions. What once took 2-3 days now clears instantly. Consumers expect real-time visibility of financial transactions. Non-bank firms increasingly dominate payments.",
+            example: "M-Pesa in Kenya allows people without bank accounts to send money via mobile phone. Over 50 million people use it to pay bills, send money to family, and run businesses—all without a traditional bank.",
+            question: {
+                type: "fill",
+                text: "Digital payments have reduced transaction clearing time from 2-3 days to _______ time.",
+                answer: "instant",
+                explanation: "Digital payment systems process transactions instantly (real-time), compared to traditional banking which could take 2-3 days for payments to clear. This immediate processing is now expected by consumers."
+            },
+            plain: "Digital payments (Apple Pay, Monzo, M-Pesa) mean money moves instantly instead of taking days. You can see your transactions immediately. Tech companies (not just banks) now handle most payments."
+        },
+
+        // Slide 6: Digital Lending Example
+        {
+            title: "Example: Digital Lending",
+            concept: "Digital lending platforms like Klarna, Upstart, and Zopa use algorithms to assess risk using thousands of data points. Credit decisions shift from human judgment to machine-driven scoring. Access expands beyond traditional credit files. Trust is created technologically.",
+            example: "Upstart uses AI to analyze over 1,000 data points including education and employment history—not just credit scores. This allows them to approve loans for people who might be rejected by traditional banks.",
+            question: {
+                type: "tf",
+                text: "Digital lending platforms rely primarily on human judgment to make credit decisions.",
+                answer: false,
+                explanation: "False. Digital lending platforms use algorithms and AI to assess risk based on thousands of data points. Credit decisions have shifted from human judgment to machine-driven scoring systems, making the process faster and potentially more inclusive."
+            },
+            plain: "Digital lending (Klarna, Upstart, Zopa) uses computers to decide if you can borrow money. Instead of a bank manager reviewing your application, algorithms check thousands of data points instantly. More people can access loans because the system looks beyond traditional credit scores."
+        },
+
+        // Slide 7: Crowdfunding Example
+        {
+            title: "Example: Crowdfunding",
+            concept: "Platforms like Kickstarter and Crowdcube allow small businesses to raise capital without banks or Venture Capital firms. Financial intermediation becomes decentralized. Transactions are validated by distributed consensus rather than banks.",
+            example: "Pebble smartwatch raised $10.3 million from 68,929 backers on Kickstarter—one of the most funded projects ever. No banks or VCs were involved; thousands of individuals directly funded the product.",
+            question: {
+                type: "mcq",
+                text: "What is the main advantage of crowdfunding platforms like Kickstarter and Crowdcube?",
+                options: [
+                    "They offer lower interest rates than banks",
+                    "They allow businesses to raise capital without traditional financial intermediaries",
+                    "They guarantee business success",
+                    "They only work for technology products"
+                ],
+                answer: 1,
+                explanation: "Crowdfunding platforms allow businesses to raise capital directly from many individuals, bypassing traditional financial intermediaries like banks and Venture Capital firms. This decentralizes the funding process and democratizes access to capital."
+            },
+            plain: "Crowdfunding (Kickstarter, Crowdcube) lets businesses get money directly from many people instead of from banks. Financial power becomes spread out instead of concentrated. The crowd decides what to fund, not banks or big investors."
+        },
+
+        // Slide 8: Digital Transformation Cycle
+        {
+            title: "Digital Transformation Cycle",
+            concept: "Digital transformation follows a continuous cycle: digital technologies enable new business processes, which create new organizational structures, which generate new value creation mechanisms, which produce better data ecosystems, which then enable further technological improvements.",
+            example: "A bank introduces mobile payments (technology), reorganizes teams around digital products (structure), offers instant loans through apps (new value), collects user behavior data (data ecosystem), then uses that data to improve AI lending algorithms (back to technology).",
+            question: {
+                type: "fill",
+                text: "The digital transformation cycle is _______ rather than linear, meaning it continuously loops back to drive further improvements.",
+                answer: "continuous",
+                explanation: "The digital transformation cycle is continuous (or iterative/cyclical). It's not a one-time project but an ongoing process where each phase feeds into the next, creating a loop of constant improvement and innovation."
+            },
+            plain: "Digital transformation isn't a one-time change—it's a continuous loop. New technology leads to new ways of working, which creates new services, which generates new data, which enables even better technology. The cycle keeps repeating and improving."
+        },
+
+        // Slide 9: Key Impacts
+        {
+            title: "Digital Transformation: Key Impacts",
+            concept: "Digital transformation creates five key impacts: (1) Automation and workflow reconfiguration, (2) Real-time data and reporting cycles, (3) Changing roles in finance, (4) Data governance and control, (5) Integration across the finance function.",
+            example: "In modern finance teams, junior analysts spend less time on data entry (automated) and more time on strategic analysis. CFOs can view real-time dashboards instead of waiting for monthly reports.",
+            question: {
+                type: "mcq",
+                text: "How many key impacts of digital transformation are identified in the lecture?",
+                options: [
+                    "Three",
+                    "Four",
+                    "Five",
+                    "Six"
+                ],
+                answer: 2,
+                explanation: "There are five key impacts identified: (1) Automation and workflow reconfiguration, (2) Real-time data and reporting cycles, (3) Changing roles in finance, (4) Data governance and control, and (5) Integration across the finance function."
+            },
+            plain: "Digital transformation impacts finance in five major ways: tasks become automated, data is available instantly, people's jobs change, data needs to be controlled carefully, and all parts of finance work together better."
+        },
+
+        // Slide 10: What is Fintech
+        {
+            title: "What is FinTech?",
+            concept: "FinTech is the application of technology to improve financial activities, processes, and intermediation. It represents the intersection of finance and technology, creating new ways to deliver financial services.",
+            example: "PayPal, founded in 1998, was an early FinTech that revolutionized online payments. Today, FinTech includes everything from mobile banking apps to cryptocurrency exchanges to robo-advisors.",
+            question: {
+                type: "tf",
+                text: "FinTech only refers to mobile payment applications like Apple Pay and Google Pay.",
+                answer: false,
+                explanation: "False. FinTech is much broader than just mobile payments. It encompasses all applications of technology to improve financial activities, including lending, investing, insurance, cryptocurrency, banking, and many other financial services."
+            },
+            plain: "FinTech = Financial Technology. It's any use of technology to make financial services better, faster, or cheaper. This includes payment apps, lending platforms, investment tools, insurance tech, and much more."
+        },
+
+        // Slide 11: Payments & Money Movement
+        {
+            title: "Payments & Money Movement",
+            concept: "Digital payment systems include mobile payments, digital wallets, instant transfers, and cross-border remittances. Examples: Apple Pay, Google Pay, PayPal, Revolut, M-Pesa, Wise. They make payments immediate and frictionless, reduce dependence on cash and cards, and shift control from banks to tech platforms.",
+            example: "Wise (formerly TransferWise) allows international money transfers at the mid-market exchange rate with low fees. A transfer that would cost £30 and take 3-5 days through a bank costs £3 and completes in hours.",
+            question: {
+                type: "fill",
+                text: "Digital payment systems shift control from _______ to technology platforms.",
+                answer: "banks",
+                explanation: "Digital payment systems shift control from banks to technology platforms. Companies like Apple, Google, and PayPal now handle transactions that were traditionally the exclusive domain of banks, fundamentally changing who controls payment infrastructure."
+            },
+            plain: "Digital payments (Apple Pay, Revolut, M-Pesa, Wise) let you send money instantly from your phone. They're faster and cheaper than traditional banks. Tech companies now control much of the payment system instead of just banks."
+        },
+
+        // Slide 12: Digital Lending & Credit Innovation
+        {
+            title: "Digital Lending & Credit Innovation",
+            concept: "Digital lending includes BNPL (Buy Now Pay Later), algorithmic credit scoring, SME digital lending platforms, and marketplace lending. Examples: Klarna, Upstart, Zopa, Funding Circle. Impact: faster credit decisions, alternative data enables broader access, challenges banks' traditional underwriting models.",
+            example: "Klarna's BNPL service lets you split purchases into 3-4 payments with no interest. At checkout, you're approved in seconds using algorithmic scoring—no lengthy credit application like traditional finance.",
+            question: {
+                type: "mcq",
+                text: "What does BNPL stand for?",
+                options: [
+                    "Bank Now Pay Later",
+                    "Buy Now Pay Later",
+                    "Borrow Now Pay Loan",
+                    "Business Network Payment Link"
+                ],
+                answer: 1,
+                explanation: "BNPL stands for Buy Now Pay Later. It's a digital lending service that allows consumers to purchase items immediately and pay in installments over time, typically without interest if paid within the agreed period."
+            },
+            plain: "Digital lending (Klarna, Zopa, Funding Circle) gives you loans or credit instantly using computer algorithms. BNPL means 'Buy Now Pay Later'—you get something now and pay over time. Decisions happen in seconds, not days or weeks."
+        },
+
+        // Slide 13: WealthTech
+        {
+            title: "WealthTech (Digital Investment Services)",
+            concept: "WealthTech includes robo-advisors, micro-investing apps, and digital brokerage platforms. Examples: Nutmeg, Betterment, Moneybox, Robinhood. Impact: democratizes investment, lowers cost of wealth management, provides personalized portfolios at scale.",
+            example: "Moneybox rounds up your everyday purchases to the nearest pound and invests the spare change. Spend £3.40 on coffee, and 60p goes into your investment account automatically—making investing accessible to everyone.",
+            question: {
+                type: "tf",
+                text: "WealthTech platforms like robo-advisors have made investment services more expensive than traditional wealth managers.",
+                answer: false,
+                explanation: "False. WealthTech platforms have significantly lowered the cost of wealth management. Robo-advisors typically charge 0.25-0.5% annually compared to 1-2% for traditional advisors, making investment advice accessible to people with smaller portfolios."
+            },
+            plain: "WealthTech (Nutmeg, Moneybox, Robinhood) makes investing easy and cheap. Robo-advisors are computer programs that manage your money automatically. You can start investing with small amounts, and it costs much less than traditional wealth managers."
+        },
+
+        // Slide 14: InsurTech
+        {
+            title: "InsurTech (Digital Insurance Solutions)",
+            concept: "InsurTech includes digital underwriting, usage-based insurance, telematics, and automated claims processing. Examples: Cuvva, Lemonade, Vitality. Impact: personalized risk pricing, faster claims decisions, new business models like pay-per-mile insurance.",
+            example: "Cuvva offers car insurance by the hour. Need to borrow your friend's car for 2 hours? Buy 2 hours of insurance from your phone. Traditional insurers require annual policies—InsurTech creates flexible alternatives.",
+            question: {
+                type: "mcq",
+                text: "What is telematics in InsurTech?",
+                options: [
+                    "Automated email marketing for insurance",
+                    "Technology that monitors driving behavior to price insurance",
+                    "Digital payment processing for premiums",
+                    "Online insurance comparison websites"
+                ],
+                answer: 1,
+                explanation: "Telematics uses technology (like smartphone sensors or plug-in devices) to monitor how you drive—speed, braking, cornering. Insurers use this data to price your insurance more accurately based on your actual driving behavior, potentially offering discounts for safe drivers."
+            },
+            plain: "InsurTech (Cuvva, Lemonade, Vitality) uses technology to make insurance better. You can buy insurance by the hour, get instant quotes, and claims are processed automatically. Your actual behavior (like how you drive) determines your price, not just demographics."
+        },
+
+        // Slide 15: RegTech
+        {
+            title: "RegTech (Regulatory Technology)",
+            concept: "RegTech includes identity verification, compliance monitoring, and risk analytics. Examples: Onfido, ComplyAdvantage, Trulioo. Impact: reduces regulatory burden, improves accuracy of fraud and risk monitoring, supports open banking ecosystems.",
+            example: "Onfido uses AI to verify identity in seconds—you take a selfie and photo of your ID, and the system confirms it's really you. This replaces manual document checks that took days, helping companies comply with Know Your Customer (KYC) regulations.",
+            question: {
+                type: "fill",
+                text: "RegTech helps companies comply with regulations while reducing the _______ burden of manual compliance processes.",
+                answer: "regulatory",
+                explanation: "RegTech reduces the regulatory burden by automating compliance tasks. Instead of manual processes that require lots of staff and time, RegTech uses technology to monitor compliance, verify identities, and detect risks automatically, saving cost and improving accuracy."
+            },
+            plain: "RegTech (Onfido, ComplyAdvantage, Trulioo) helps companies follow financial regulations using technology. It automatically checks identities, monitors for fraud, and ensures compliance. This makes following rules easier, faster, and cheaper."
+        },
+
+        // Slide 16: Alternative Finance & Platform Models
+        {
+            title: "Alternative Finance & Platform-Based Models",
+            concept: "Alternative finance includes crowdfunding, P2P lending, invoice finance platforms, and equity crowdfunding. Examples: Kickstarter, Crowdcube, Seedrs, LendingClub. Impact: disintermediates traditional financial institutions, enables micro-investing and community-led funding, creates new forms of financial intermediation.",
+            example: "Seedrs allows you to invest as little as £10 in startup companies and own actual equity. Previously, only wealthy angel investors or VC firms could invest in startups—now anyone can participate in early-stage investing.",
+            question: {
+                type: "mcq",
+                text: "What does 'disintermediation' mean in alternative finance?",
+                options: [
+                    "Adding more banks to the process",
+                    "Removing traditional intermediaries like banks from financial transactions",
+                    "Creating new regulations",
+                    "Increasing transaction fees"
+                ],
+                answer: 1,
+                explanation: "Disintermediation means removing traditional intermediaries (like banks and VCs) from financial transactions. Alternative finance platforms connect borrowers directly with lenders, or startups directly with investors, eliminating the middleman and potentially reducing costs."
+            },
+            plain: "Alternative finance (Kickstarter, Crowdcube, Seedrs, LendingClub) lets people connect directly without banks in the middle. You can lend money to others (P2P), invest in startups (equity crowdfunding), or fund projects (crowdfunding). Small amounts from many people replace big loans from banks."
+        },
+
+        // Slide 17: Blockchain
+        {
+            title: "Blockchain Technology",
+            concept: "Blockchain is a shared digital ledger that stores information securely in blocks that cannot be altered. It allows people to verify transactions without relying on a central institution. Purpose: create a transparent and tamper-resistant way to record and verify transactions.",
+            example: "Bitcoin uses blockchain to record all transactions. When you send Bitcoin, the transaction is verified by thousands of computers worldwide and permanently recorded. No bank controls it—the network itself ensures accuracy and security.",
+            question: {
+                type: "tf",
+                text: "Blockchain requires a central authority like a bank to verify and approve transactions.",
+                answer: false,
+                explanation: "False. The key innovation of blockchain is that it does NOT require a central authority. Transactions are verified by the distributed network of participants using consensus mechanisms, eliminating the need for a trusted intermediary like a bank."
+            },
+            plain: "Blockchain is like a digital record book that everyone can see but no one can change. Instead of a bank keeping the records, thousands of computers verify transactions together. Once something is recorded, it can't be altered or deleted, making it very secure and transparent."
+        },
+
+        // Slide 18: Risks and Challenges
+        {
+            title: "Risks and Challenges with Emerging Technologies",
+            concept: "Key risks include: (1) Algorithmic bias—AI models can reinforce inequalities and create unfair lending/insurance decisions. (2) Data privacy and surveillance—behavioral data creates ethical challenges. (3) Cybersecurity risks—blockchain exploits, identity theft, cloud vulnerabilities. (4) Regulatory gaps—difficulty regulating decentralized systems like DeFi.",
+            example: "In 2019, Apple Card was accused of algorithmic bias when it offered a man 20x the credit limit of his wife, despite her higher credit score. The algorithm had unintentionally learned gender biases from historical data.",
+            question: {
+                type: "mcq",
+                text: "Which of the following is NOT mentioned as a risk of emerging financial technologies?",
+                options: [
+                    "Algorithmic bias in lending decisions",
+                    "Data privacy concerns",
+                    "Cybersecurity vulnerabilities",
+                    "Excessive government control"
+                ],
+                answer: 3,
+                explanation: "Excessive government control is not mentioned as a risk. The actual risks discussed are algorithmic bias, data privacy/surveillance issues, cybersecurity risks, and regulatory gaps (meaning too little regulation of decentralized systems, not too much control)."
+            },
+            plain: "Emerging financial technologies have risks: AI can be biased and unfair, companies collect lots of personal data raising privacy concerns, hackers can exploit digital systems, and regulators struggle to keep up with new decentralized technologies like cryptocurrency."
+        },
+
+        // Slide 19: Collaborative Economy in Finance
+        {
+            title: "The Collaborative Economy in Finance",
+            concept: "The collaborative economy uses digital platforms to match service providers with consumers, facilitating peer-to-peer transactions. In traditional finance, banks act as intermediaries (depositors → bank → borrowers). In platform-based finance, platforms match users directly with decentralized, data-driven risk assessment.",
+            example: "LendingClub connects people who want to lend money directly with people who need loans. Instead of depositing money in a bank that then lends it, lenders choose specific borrowers and earn the interest directly (minus platform fees).",
+            question: {
+                type: "fill",
+                text: "In platform-based finance, platforms earn _______ rather than holding the financial risk themselves.",
+                answer: "fees",
+                explanation: "Platform-based financial services earn fees for facilitating transactions between peers. Unlike traditional banks that hold deposits and take on lending risk themselves, platforms simply connect parties and charge for the matching service, shifting risk to the participants."
+            },
+            plain: "Collaborative economy means people working directly with each other through online platforms instead of through banks. Traditional: you give money to a bank, bank lends it out. Platform model: website connects you directly with borrower. The platform just facilitates and charges a fee—it doesn't hold the risk."
+        },
+
+        // Slide 20: Platform Models - Crowdfunding & P2P
+        {
+            title: "Platform-Based Models: Crowdfunding & P2P Lending",
+            concept: "Crowdfunding allows individuals/organizations to raise funds from many people via online platforms. Types: donation-based, reward-based, equity crowdfunding, lending-based. P2P Lending connects individual lenders directly with borrowers. Process: borrowers apply, platform assesses risk algorithmically, lenders choose loans, platform manages repayments.",
+            example: "On Funding Circle (P2P lending), a cafe owner needs £50,000. The platform assesses the business and assigns a risk rating. 100 individuals each lend £500, earning 6% interest. The platform collects repayments and distributes them to lenders monthly.",
+            question: {
+                type: "mcq",
+                text: "In equity crowdfunding, investors receive:",
+                options: [
+                    "A reward or product",
+                    "Fixed interest payments",
+                    "Ownership shares in the company",
+                    "Nothing, it's a donation"
+                ],
+                answer: 2,
+                explanation: "In equity crowdfunding, investors receive ownership shares (equity) in the company. This is different from reward-based crowdfunding (you get a product), lending-based crowdfunding (you get interest payments), or donation-based crowdfunding (you get nothing tangible)."
+            },
+            plain: "Crowdfunding: Many people each give small amounts to fund a project or business. Types include donations (give for free), rewards (get a product), equity (own part of company), or lending (get paid back with interest). P2P lending: Platform connects borrowers and lenders directly, using algorithms to assess risk. The platform manages everything but doesn't lend its own money."
+        },
+
+        // Slide 21: Platform Benefits & Risks
+        {
+            title: "Platform-Based Finance: Benefits and Risks",
+            concept: "Benefits: Financial inclusion (broader access), efficiency (lower costs, faster processing), innovation (new products/services), participation (democratized investment). Risks: Credit and default risk (borrowers may not repay), platform risk (platform could fail), information asymmetry (unequal knowledge), regulatory and consumer protection issues.",
+            example: "Benefit example: Zopa has helped thousands of people with thin credit files get loans by using alternative data. Risk example: When Lendy (a UK P2P platform) collapsed in 2019, investors lost approximately £160 million because the platform had mismanaged loans.",
+            question: {
+                type: "tf",
+                text: "Platform-based finance eliminates all financial risks for participants by using technology.",
+                answer: false,
+                explanation: "False. Platform-based finance does NOT eliminate risks; it creates different risks. Participants face credit default risk, platform failure risk, information asymmetry, and less regulatory protection than traditional banking. Technology improves some aspects but introduces new vulnerabilities."
+            },
+            plain: "Platform finance has benefits: more people can access financial services, costs are lower, new innovations emerge, and ordinary people can participate in investing. But risks exist: borrowers might not repay, platforms can fail, information isn't always equal between parties, and consumer protections may be weaker than traditional banks."
+        }
+    ];
+
+    function renderSlide(index) {
+        const slide = slides[index];
+        const container = document.getElementById('slideContainer');
+        
+        let questionHTML = '';
+        
+        if (slide.question.type === 'mcq') {
+            questionHTML = `
+                <div class="question-options">
+                    ${slide.question.options.map((option, i) => `
+                        <div class="option" onclick="selectOption(${i})" data-index="${i}">
+                            ${option}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        } else if (slide.question.type === 'tf') {
+            questionHTML = `
+                <div class="tf-buttons">
+                    <button class="tf-btn" onclick="selectTF(true, this)">True</button>
+                    <button class="tf-btn" onclick="selectTF(false, this)">False</button>
+                </div>
+            `;
+        } else if (slide.question.type === 'fill') {
+            questionHTML = `
+                <input type="text" class="input-answer" id="fillAnswer" placeholder="Type your answer here...">
+            `;
+        }
+
+        container.innerHTML = `
+            <div class="slide-card">
+                <h2 style="margin-bottom: 25px; font-size: 2em;">${slide.title}</h2>
+                
+                <div class="section concept">
+                    <div class="section-header">
+                        <span class="section-icon">📘</span>
+                        CONCEPT
+                    </div>
+                    <div class="section-content">
+                        ${slide.concept}
+                    </div>
+                </div>
+
+                <div class="section example">
+                    <div class="section-header">
+                        <span class="section-icon">💡</span>
+                        REAL EXAMPLE
+                    </div>
+                    <div class="section-content">
+                        ${slide.example}
+                    </div>
+                </div>
+
+                <div class="section question">
+                    <div class="section-header">
+                        <span class="section-icon">❓</span>
+                        QUESTION
+                    </div>
+                    <div class="section-content">
+                        ${slide.question.text}
+                        ${questionHTML}
+                        <button class="show-answer-btn" onclick="showAnswer()">Show Answer</button>
+                        <div class="answer-explanation" id="answerExplanation">
+                            <strong>✓ Answer:</strong> ${slide.question.type === 'mcq' ? slide.question.options[slide.question.answer] : slide.question.type === 'tf' ? (slide.question.answer ? 'True' : 'False') : slide.question.answer}
+                            <br><br>
+                            ${slide.question.explanation}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section plain">
+                    <div class="section-header">
+                        <span class="section-icon">📝</span>
+                        PLAIN ENGLISH
+                    </div>
+                    <div class="section-content">
+                        ${slide.plain}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Update slide indicator
+        document.getElementById('slideIndicator').textContent = `Slide ${index + 1} of ${slides.length}`;
+        
+        // Update navigation buttons
+        document.getElementById('prevBtn').disabled = index === 0;
+        document.getElementById('nextBtn').disabled = index === slides.length - 1;
+        
+        // Scroll to top
+        window.scrollTo(0, 0);
+    }
+
+    function selectOption(index) {
+        const options = document.querySelectorAll('.option');
+        options.forEach(opt => opt.classList.remove('selected'));
+        options[index].classList.add('selected');
+    }
+
+    function selectTF(value, element) {
+        const buttons = document.querySelectorAll('.tf-btn');
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        element.classList.add('selected');
+    }
+
+    function showAnswer() {
+        const slide = slides[currentSlide];
+        const explanation = document.getElementById('answerExplanation');
+        explanation.classList.add('show');
+
+        if (slide.question.type === 'mcq') {
+            const options = document.querySelectorAll('.option');
+            options.forEach((opt, i) => {
+                if (i === slide.question.answer) {
+                    opt.classList.add('correct');
+                } else if (opt.classList.contains('selected')) {
+                    opt.classList.add('incorrect');
+                }
+            });
+        } else if (slide.question.type === 'tf') {
+            const buttons = document.querySelectorAll('.tf-btn');
+            buttons.forEach(btn => {
+                const isTrue = btn.textContent === 'True';
+                if (isTrue === slide.question.answer) {
+                    btn.classList.add('correct');
+                } else if (btn.classList.contains('selected')) {
+                    btn.classList.add('incorrect');
+                }
+            });
+        } else if (slide.question.type === 'fill') {
+            const input = document.getElementById('fillAnswer');
+            const userAnswer = input.value.trim().toLowerCase();
+            const correctAnswer = slide.question.answer.toLowerCase();
+            
+            if (userAnswer === correctAnswer) {
+                input.style.borderColor = '#48bb78';
+                input.style.background = 'rgba(72, 187, 120, 0.3)';
+            } else {
+                input.style.borderColor = '#f56565';
+                input.style.background = 'rgba(245, 101, 101, 0.3)';
+            }
+        }
+    }
+
+    function changeSlide(direction) {
+        const newSlide = currentSlide + direction;
+        if (newSlide >= 0 && newSlide < slides.length) {
+            currentSlide = newSlide;
+            renderSlide(currentSlide);
+        }
+    }
+
+    // Initialize first slide
+    renderSlide(0);
+</script>
+```
+
+</body>
+</html>
